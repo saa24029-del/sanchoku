@@ -46,8 +46,7 @@
             padding-bottom: 0.5rem;
             margin-top: 0;
         }
-        /* 野菜紹介スタイル */
-        .veg-grid {
+       .veg-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             gap: 15px;
@@ -57,17 +56,24 @@
             height: 140px;
             background-size: cover;
             background-position: center;
-            border: none;
+            border: 3px solid transparent; /* ガタつき防止のため透明な太枠をあらかじめ設定 */
             border-radius: 10px;
             cursor: pointer;
             position: relative;
             overflow: hidden;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+            box-sizing: border-box; /* 枠線がボタンサイズの内側に収まるように指定 */
         }
         .veg-btn:hover {
             transform: translateY(-4px);
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        /* ★クリックされて選択中のボタンに適用する赤枠＋赤光りエフェクト★ */
+        .veg-btn.active {
+            border-color: #ef4444;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.6);
+            transform: translateY(-2px); /* 選択中は少し浮かせた状態をキープ */
         }
         .veg-btn span {
             position: absolute;
