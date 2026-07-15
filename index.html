@@ -417,6 +417,18 @@
                 box.style.display = 'block';
             });
         });
+        // アコーディオンの開閉処理
+        document.getElementById('accordion-toggle').addEventListener('click', () => {
+            const isOpen = accArrow.classList.contains('rotated');
+            if (isOpen) {
+                accContent.style.maxHeight = '0';
+                accArrow.classList.remove('rotated');
+            } else {
+                // スムーズなアニメーション展開のためにscrollHeightを使用
+                accContent.style.maxHeight = accContent.scrollHeight + 'px';
+                accArrow.classList.add('rotated');
+            }
+        });
         // ==================================================
         // 2. 逆さゲームの制御ロジック
         // ==================================================
