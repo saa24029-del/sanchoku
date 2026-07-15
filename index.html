@@ -415,12 +415,17 @@
             }
         };
 
-        const box = document.getElementById('desc-box');
+       const box = document.getElementById('desc-box');
         const accContent = document.getElementById('accordion-content');
         const accArrow = document.getElementById('accordion-arrow');
 
         document.querySelectorAll('.veg-btn').forEach(btn => {
             btn.addEventListener('click', () => {
+                // すべてのボタンから選択状態（activeクラス）を解除
+                document.querySelectorAll('.veg-btn').forEach(b => b.classList.remove('active'));
+                // クリックされたボタンに選択状態（activeクラス）を追加
+                btn.classList.add('active');
+
                 const key = btn.getAttribute('data-veg');
                 document.getElementById('desc-title').textContent = vegData[key].title;
                 document.getElementById('desc-content').textContent = vegData[key].content;
