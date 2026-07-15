@@ -46,7 +46,8 @@
             padding-bottom: 0.5rem;
             margin-top: 0;
         }
-       .veg-grid {
+        /* 野菜紹介スタイル */
+        .veg-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             gap: 15px;
@@ -69,7 +70,7 @@
             transform: translateY(-4px);
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
         }
-        /* ★クリックされて選択中のボタンに適用する赤枠＋赤光りエフェクト★ */
+        /* クリックされて選択中のボタンに適用する赤枠＋赤光りエフェクト */
         .veg-btn.active {
             border-color: #ef4444;
             box-shadow: 0 0 12px rgba(239, 68, 68, 0.6);
@@ -106,52 +107,53 @@
             line-height: 1.6;
         }
 
-        /* アコーディオン（栽培方法）のスタイル */
-        .accordion-container {
-            margin-top: 1.2rem;
-            border-top: 1px dashed #cbd5e1;
-            padding-top: 1rem;
-        }
-        .accordion-toggle {
-            width: 100%;
-            background: #e2fbf0;
-            border: 1px solid #a7f3d0;
-            color: #047857;
-            padding: 10px 15px;
-            text-align: left;
-            font-size: 0.95rem;
-            font-weight: bold;
-            border-radius: 6px;
-            cursor: pointer;
+        /* 新設：タブシステム用スタイル */
+        .tab-container {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background 0.2s;
+            gap: 8px;
+            margin-top: 1.5rem;
+            border-bottom: 2px solid #cbd5e1;
         }
-        .accordion-toggle:hover {
-            background: #d1fae5;
-        }
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            background: #f8fafc;
-            border-radius: 0 0 6px 6px;
-        }
-        .accordion-content p {
-            padding: 12px 15px;
-            margin: 0;
+        .tab-btn {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-bottom: none;
+            padding: 8px 16px;
             font-size: 0.9rem;
-            line-height: 1.6;
-            color: #334155;
+            font-weight: bold;
+            color: #64748b;
+            cursor: pointer;
+            border-radius: 6px 6px 0 0;
+            transition: all 0.2s;
+            margin-bottom: -2px;
         }
-        .arrow {
-            transition: transform 0.3s;
-            display: inline-block;
+        .tab-btn:hover {
+            color: #16a34a;
+            background: #e2e8f0;
         }
-        .arrow.rotated {
-            transform: rotate(180deg);
+        .tab-btn.active {
+            color: #16a34a;
+            background: #ffffff;
+            border-color: #cbd5e1;
+            border-bottom: 2px solid #ffffff;
         }
+        .tab-content {
+            display: none;
+            padding: 1.2rem;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            animation: fadeIn 0.2s ease-in-out;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        #recipe-steps {
+            white-space: pre-wrap; /* 改行を適切に反映させる */
+        }
+
         /* ゲームスタイル */
         .game-box {
             background: #ecfeff;
@@ -299,21 +301,29 @@
             <!-- 野菜クリック時に開く説明ボックス -->
             <div id="desc-box" class="desc-box">
                 <h3 id="desc-title"></h3>
-                <p id="desc-content"></p>
+                <p id="desc-content" style="margin-bottom: 1.5rem;"></p>
 
-                <!-- 折りたたみ（アコーディオン）栽培方法 -->
-                <div class="accordion-container">
-                    <button id="accordion-toggle" class="accordion-toggle">
-                        <span>🌱 おうちでの栽培方法を見る</span>
-                        <span class="arrow" id="accordion-arrow">▼</span>
-                    </button>
-                    <div id="accordion-content" class="accordion-content">
-                        <p id="desc-cultivation"></p>
-                        <!-- ★ここに不足していた外部リンク用の枠を追加しました★ -->
-                        <div id="cultivation-link-box" style="padding: 10px 15px; display: none;">
-                            <a id="cultivation-link" href="#" target="_blank" rel="noopener noreferrer" style="color: #16a34a; font-weight: bold; text-decoration: none; font-size: 0.9rem;"></a>
-                        </div>
+                <!-- タブボタン -->
+                <div class="tab-container">
+                    <button id="tab-cultivation-btn" class="tab-btn active">🌱 おうちでの育て方</button>
+                    <button id="tab-recipe-btn" class="tab-btn">🍳 簡単レシピ</button>
+                </div>
+
+                <!-- 育て方タブの中身 -->
+                <div id="tab-cultivation-content" class="tab-content active">
+                    <p id="desc-cultivation" style="font-size: 0.95rem; color: #334155; margin: 0;"></p>
+                    <div id="cultivation-link-box" style="margin-top: 12px; display: none;">
+                        <a id="cultivation-link" href="#" target="_blank" rel="noopener noreferrer" style="color: #16a34a; font-weight: bold; text-decoration: none; font-size: 0.9rem;"></a>
                     </div>
+                </div>
+
+                <!-- レシピタブの中身 -->
+                <div id="tab-recipe-content" class="tab-content">
+                    <h4 id="recipe-title" style="margin: 0 0 0.8rem 0; color: #b45309; font-size: 1.1rem; border-bottom: 1px solid #fef3c7; padding-bottom: 4px;"></h4>
+                    <p style="margin: 0 0 0.4rem 0; font-size: 0.9rem; font-weight: bold; color: #78350f;">【材料】</p>
+                    <p id="recipe-ingredients" style="margin: 0 0 1rem 0; font-size: 0.9rem; background: #fffbeb; padding: 10px; border-radius: 6px; border: 1px solid #fef3c7; color: #78350f; line-height: 1.4;"></p>
+                    <p style="margin: 0 0 0.4rem 0; font-size: 0.9rem; font-weight: bold; color: #78350f;">【作り方】</p>
+                    <p id="recipe-steps" style="margin: 0; font-size: 0.9rem; line-height: 1.6; color: #334155;"></p>
                 </div>
             </div>
         </section>
@@ -362,12 +372,12 @@
         // Firebase Config (ここに自分のconfigを貼る)
         // --------------------------------------------------
         const firebaseConfig = {
-            apiKey: "AIzaSyA1TfvllQ6tnyi6kv7iRstfnLwpLwuB8Jo",
-            authDomain: "sanchoku-986da.firebaseapp.com",
-            projectId: "sanchoku-986da",
-            storageBucket: "sanchoku-986da.firebasestorage.app",
-            messagingSenderId: "1048589978486",
-            appId: "1:1048589978486:web:f54aa2c997045775444857"
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
         };
 
         // Firebase初期化
@@ -375,50 +385,93 @@
         const db = getFirestore(app);
 
         // ==================================================
-        // 1. 野菜紹介の制御ロジック
+        // 1. 野菜紹介の制御ロジック（レシピデータ追加）
         // ==================================================
         const vegData = {
             nasu: { 
                 title: "ナス", 
-                content: "朝採りのナスは皮が柔らかく、水分をたっぷり含んで実が詰まっています。定番の焼きナスや天ぷらはもちろん、麻婆茄子にすると油を吸ってとろけるような食感に。持ったときにずっしりと重みがあるのが新鮮な証拠です",
+                content: "朝採りのナスは皮が柔らかく、水分をたっぷり含んで実が詰まっています。定番の焼きナスや天ぷらはもちろん、麻婆茄子にすると油を吸ってとろけるような食感に。持ったときにずっしりと重みがあるのが新鮮な証拠です。",
                 cultivation: "日当たりと風通しの良い場所で育てます。ナスは「水と肥料で育つ」と言われるほど水を好むため、土の表面が乾いたらたっぷり水やりをしましょう。一番最初の実がなったら、そのすぐ下の勢いのある脇芽を2本残して「3本仕立て」にするのが多収穫のコツです。",
                 linkUrl: "https://sakata-tsushin.com/lesson-vegetable/detail_2/",
-                linkText: "👉 ナスの詳しい育て方を調べる（外部サイト）"
+                linkText: "👉 ナスの詳しい育て方を調べる（外部サイト）",
+                recipe: {
+                    title: "ナスのとろとろポン酢炒め",
+                    ingredients: "ナス 2本、ポン酢 大さじ2、ごま油 大さじ1、刻みネギ 適量",
+                    steps: "1. ナスを一口大の乱切りにし、水にさらして水気を切ります。\n2. フライパンにごま油を熱し、ナスがしんなりするまで中火で炒めます。\n3. ポン酢を回し入れてさっと炒め合わせ、お皿に盛ってネギを散らせば完成です！"
+                }
             },
             piman: { 
                 title: "ピーマン", 
                 content: "太陽をたっぷり浴びて育った、肉厚でシャキシャキのピーマンです。独特の青臭さが少なく、加熱すると引き立つ甘みが特徴。定番の肉詰めはもちろん、丸ごとホイル焼きにして丸かじりするのも農家一押しの贅沢な食べ方です。",
                 cultivation: "暑さに強く、病気にも強いため初心者でも簡単に育てられます。最初の花が咲き出したら、その下の脇芽を摘み取って風通しを良くしましょう。乾燥に弱いので、夏場はプランターの土が乾かないように朝晩しっかり水やりをします。",
                 linkUrl: "https://sakata-tsushin.com/lesson-vegetable/detail_13/",
-                linkText: "👉 ピーマンの詳しい育て方を調べる（外部サイト）"
+                linkText: "👉 ピーマンの詳しい育て方を調べる（外部サイト）",
+                recipe: {
+                    title: "ピーマンのまるごと無限レンジ和え",
+                    ingredients: "ピーマン 4個、ツナ缶 1缶、鶏ガラスープの素 小さじ1、ごま油 小さじ1、白ごま 適量",
+                    steps: "1. ピーマンはヘタと種を付けたまま手で縦半分に割ります（丸ごとでOK）。\n2. 耐熱容器に入れ、ツナ、ガラスープ、ごま油を混ぜてふんわりラップし、レンジ(600W)で3分加熱します。\n3. 全体をよく混ぜ、お好みで白ごまを振って完成です！"
+                }
             },
             kabocha: { 
                 title: "かぼちゃ", 
                 content: "収穫してからじっくりと寝かせる『追熟』を行い、極限まで甘みとコクを引き出しました。栗のようにホクホクとした食感が特徴で、定番の煮物はもちろん、クリーミーなスープやプリンにしても濃厚な味わいを楽しめます。",
                 cultivation: "ツルが四方に長く伸びるため、広いスペース（地這い栽培）を用意するか、ネットに這わせる「立体栽培」で省スペースに育てます。親ツルが伸びて本葉5〜6枚で摘心し、勢いの良い子ツルを2〜3本伸ばしてそこに実を着けるようにします。実が大きくなったら地面に直接つかないよう台座を敷いてあげます。",
                 linkUrl: "https://sakata-tsushin.com/lesson-vegetable/detail_33/",
-                linkText: "👉 かぼちゃの詳しい育て方を調べる（外部サイト）"
+                linkText: "👉 かぼちゃの詳しい育て方を調べる（外部サイト）",
+                recipe: {
+                    title: "レンジで簡単！バターかぼちゃ",
+                    ingredients: "かぼちゃ 1/4個、バター 10g、砂糖 小さじ1、醤油 小さじ1/2",
+                    steps: "1. かぼちゃを一口大に切り、耐熱容器に並べて大さじ1の水を振りかけます。\n2. ふんわりラップをしてレンジ(600W)で約4〜5分、竹串がスッと通るまで加熱します。\n3. 熱いうちにバター、砂糖、醤油を加えて全体によく絡めれば完成です！"
+                }
             },
             jagaimo: { 
                 title: "ジャガイモ", 
                 content: "大地の旨味をギュッと蓄えた、豊かな香りが自慢のジャガイモです。ホクホクとした食感で、じゃがバターや肉じゃが、ポテトサラダにすると素材本来の味が引き立ちます。皮が薄いので、よく洗って皮ごと調理するのもおすすめです。",
                 cultivation: "春（3月頃）または秋（9月頃）に種イモを植え付けます。芽が伸びてきたら、元気なものを1〜2本残して他を引き抜く「芽かき」を行います。ジャガイモが日光に当たって緑色（毒素）になるのを防ぐため、成長に合わせて株元に土を盛る「土寄せ」を2〜3回行うのが収穫量を増やす大事なポイントです。",
                 linkUrl: "https://sakata-tsushin.com/yomimono/tokushu/detail_904/",
-                linkText: "👉 ジャガイモの詳しい育て方を調べる（外部サイト）"
+                linkText: "👉 ジャガイモの詳しい育て方を調べる（外部サイト）",
+                recipe: {
+                    title: "カリカリ！ガレット風ハッシュドポテト",
+                    ingredients: "ジャガイモ 2個、片栗粉 大さじ1、塩コショウ 少々、オリーブオイル 大さじ1",
+                    steps: "1. ジャガイモを細い千切りにします（水にさらさないのが最大のポイントです）。\n2. ボウルにジャガイモ、片栗粉、塩コショウを入れて全体に混ぜ合わせます。\n3. フライパンにオイルを熱し、平らに広げて両面がカリカリになるまで弱中火でじっくり焼けば完成です！"
+                }
             },
             toumorokoshi: { 
                 title: "トウモロコシ", 
                 content: "日の出前の最も甘みを蓄えた時間帯に収穫した、抜群の糖度を誇るトウモロコシです。収穫直後が一番甘いため、手に入ったらできるだけ早く茹でるか、電子レンジで加熱してお召し上がりいただくのが一番の贅沢です。",
                 cultivation: "風で受粉するため、1列ではなく複数列（ブロック状）に並べて植えるのが、実がスカスカにならずぎっしり詰まる秘訣です。1株から複数の実（雌穂）が出ますが、栄養を1つに集中させるために、一番上の大きな1本だけを残し、下のものは小さいうちに「ヤングコーン」として摘み取って食べましょう。",
                 linkUrl: "https://sakata-tsushin.com/lesson-vegetable/detail_3/",
-                linkText: "👉 トウモロコシの詳しい育て方を調べる（外部サイト）"
+                linkText: "👉 トウモロコシの詳しい育て方を調べる（外部サイト）",
+                recipe: {
+                    title: "香ばしバター醤油焼きトウモロコシ",
+                    ingredients: "トウモロコシ 1本、バター 10g、醤油 大さじ1、みりん 大さじ1/2",
+                    steps: "1. トウモロコシの皮をむき、ラップにしっかり包んでレンジ(600W)で4分加熱します。\n2. フライパンにバターを熱し、トウモロコシを入れて全体にこんがり焼き色をつけます。\n3. 醤油とみりんをあらかじめ合わせておき、フライパンに回し入れて香ばしく絡めれば完成です！"
+                }
             }
         };
 
-       const box = document.getElementById('desc-box');
-        const accContent = document.getElementById('accordion-content');
-        const accArrow = document.getElementById('accordion-arrow');
+        const box = document.getElementById('desc-box');
+        const tabCultivationBtn = document.getElementById('tab-cultivation-btn');
+        const tabRecipeBtn = document.getElementById('tab-recipe-btn');
+        const tabCultivationContent = document.getElementById('tab-cultivation-content');
+        const tabRecipeContent = document.getElementById('tab-recipe-content');
 
+        // タブ切り替えロジック
+        tabCultivationBtn.addEventListener('click', () => {
+            tabCultivationBtn.classList.add('active');
+            tabRecipeBtn.classList.remove('active');
+            tabCultivationContent.classList.add('active');
+            tabRecipeContent.classList.remove('active');
+        });
+
+        tabRecipeBtn.addEventListener('click', () => {
+            tabRecipeBtn.classList.add('active');
+            tabCultivationBtn.classList.remove('active');
+            tabRecipeContent.classList.add('active');
+            tabCultivationContent.classList.remove('active');
+        });
+
+        // 野菜ボタンクリック処理
         document.querySelectorAll('.veg-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 // すべてのボタンから選択状態（activeクラス）を解除
@@ -427,11 +480,20 @@
                 btn.classList.add('active');
 
                 const key = btn.getAttribute('data-veg');
+                
+                // 共通情報反映
                 document.getElementById('desc-title').textContent = vegData[key].title;
                 document.getElementById('desc-content').textContent = vegData[key].content;
+                
+                // 育て方情報反映
                 document.getElementById('desc-cultivation').textContent = vegData[key].cultivation;
 
-                // リンクの設定
+                // レシピ情報反映
+                document.getElementById('recipe-title').textContent = vegData[key].recipe.title;
+                document.getElementById('recipe-ingredients').textContent = vegData[key].recipe.ingredients;
+                document.getElementById('recipe-steps').textContent = vegData[key].recipe.steps;
+
+                // 育て方の外部リンク設定
                 const linkEl = document.getElementById('cultivation-link');
                 const linkBox = document.getElementById('cultivation-link-box');
                 if (vegData[key].linkUrl) {
@@ -442,24 +504,14 @@
                     linkBox.style.display = 'none';
                 }
                 
-                // 野菜が切り替わったら、アコーディオンは一度閉じた状態にする
-                accContent.style.maxHeight = '0';
-                accArrow.classList.remove('rotated');
+                // 野菜が切り替わったら、デフォルトで「おうちでの育て方」タブを開いた状態に戻す
+                tabCultivationBtn.classList.add('active');
+                tabRecipeBtn.classList.remove('active');
+                tabCultivationContent.classList.add('active');
+                tabRecipeContent.classList.remove('active');
                 
                 box.style.display = 'block';
             });
-        });
-
-        // アコーディオンの開閉処理
-        document.getElementById('accordion-toggle').addEventListener('click', () => {
-            const isOpen = accArrow.classList.contains('rotated');
-            if (isOpen) {
-                accContent.style.maxHeight = '0';
-                accArrow.classList.remove('rotated');
-            } else {
-                accContent.style.maxHeight = accContent.scrollHeight + 'px';
-                accArrow.classList.add('rotated');
-            }
         });
 
         // ==================================================
@@ -474,7 +526,7 @@
             { word: "純三年子滝野川大長牛蒡", pronunciation: "ジュンサンネンゴタキノガワオオナガゴボウ", reverse: "ウボゴガナオオワガノキタゴネンンサュジ", desc: "【超難問】収穫に3年かけ、長さが1.5m以上にもなる幻の江戸東京伝統ゴボウ。" },
             { word: "万願寺とうがらし", pronunciation: "マンガンジトウガラシ", reverse: "シラガウトジンガンマ", desc: "京都・舞鶴発祥。肉厚で柔らかく、甘みのある「とうがらしの王様」。" },
             { word: "加賀太きゅうり", pronunciation: "カガフトキュウリ", reverse: "リウュキトフガカ", desc: "金沢の伝統的な太きゅうり。煮物やあんかけにして食べます。" },
-            { word: "聖護院かぶ", pronunciation: "ショウゴインカブ", reverse: "ブカンイゴウョシ", desc: "京都発祥、日本最大の丸かぶ。京名物の千枚漬けの材料です。" },
+            { word: "聖護院かぶ", pronunciation: "ショウゴインカブ", reverse: "ブカンいごうょし", desc: "京都発祥、日本最大の丸かぶ。京名物の千枚漬けの材料です。" },
             { word: "ロマネスコ", pronunciation: "ロマネスコ", reverse: "コスネマロ", desc: "ブロッコリーとカリフラワーの仲間。幾何学的ならせん構造が特徴。" },
             { word: "アーティチョーク", pronunciation: "アーティチョーク", reverse: "クーョチィテーア", desc: "和名は「朝鮮アザミ」。西洋ではおなじみの、つぼみを茹でて食べる高級野菜。" },
             { word: "コールラビ", pronunciation: "コールラビ", reverse: "ビラルーコ", desc: "カブのような形に肥大した茎を食べる、キャベツの仲間。" },
@@ -582,17 +634,17 @@
                     
                     const nameSpan = document.createElement('span');
                     nameSpan.style.fontWeight = 'bold';
-                    nameSpan.textContent = data.name;
+                    nameSpan.textContent = data.name; // textContentで安全に出力
                     
                     const dateSpan = document.createElement('span');
-                    dateSpan.textContent = dateText;
+                    dateSpan.textContent = dateText; // textContentで安全に出力
                     
                     meta.appendChild(nameSpan);
                     meta.appendChild(dateSpan);
                     
                     const text = document.createElement('div');
                     text.className = 'comment-text';
-                    text.textContent = data.text;
+                    text.textContent = data.text; // textContentで安全に出力
                     
                     item.appendChild(meta);
                     item.appendChild(text);
