@@ -419,6 +419,17 @@
                 document.getElementById('desc-title').textContent = vegData[key].title;
                 document.getElementById('desc-content').textContent = vegData[key].content;
                 document.getElementById('desc-cultivation').textContent = vegData[key].cultivation;
+
+// リンクの設定
+                const linkEl = document.getElementById('cultivation-link');
+                const linkBox = document.getElementById('cultivation-link-box');
+                if (vegData[key].linkUrl) {
+                    linkEl.href = vegData[key].linkUrl;
+                    linkEl.textContent = vegData[key].linkText;
+                    linkBox.style.display = 'block';
+                } else {
+                    linkBox.style.display = 'none';
+                }
                 
                 // 野菜が切り替わったら、アコーディオンは一度閉じた状態にする
                 accContent.style.maxHeight = '0';
