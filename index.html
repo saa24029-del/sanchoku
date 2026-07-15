@@ -371,24 +371,52 @@
         // ==================================================
         // 1. 野菜紹介の制御ロジック
         // ==================================================
-        const vegData = {
-            nasu: { title: "ナス", content: "みずみずしく、油との相性が抜群。焼きナス、天ぷら、麻婆茄子など様々な料理で主役になれる万能野菜です。" },
-            piman: { title: "ピーマン", content: "太陽の恵みをたっぷり浴びて育ちました。ビタミンCが非常に豊富で、肉詰めや炒め物にするとシャキシャキ感が引き立ちます。" },
-            kabocha: { title: "かぼちゃ", content: "じっくり育てて甘みを蓄えました。ホクホクとした食感が特徴で、定番の煮物はもちろん、スープやプリンにも最適です。" },
-            jagaimo: { title: "ジャガイモ", content: "大地の旨味が詰まったホクホクのジャガイモです。カレーや肉じゃがなどの煮込み料理から、ポテトサラダまで幅広く活躍します。" },
-            toumorokoshi: { title: "トウモロコシ", content: "圧倒的な甘さが自慢です！収穫直後が一番甘いため、手に入ったらすぐに茹でるか、焼きトウモロコシにして召し上がれ。" }
+      const vegData = {
+            nasu: { 
+                title: "ナス", 
+                content: "みずみずしく、油との相性が抜群。焼きナス、天ぷら、麻婆茄子など様々な料理で主役になれる万能野菜です。",
+                cultivation: "日当たりと風通しの良い場所で育てます。ナスは「水と肥料で育つ」と言われるほど水を好むため、土の表面が乾いたらたっぷり水やりをしましょう。一番最初の実がなったら、そのすぐ下の勢いのある脇芽を2本残して「3本仕立て」にするのが多収穫のコツです。"
+            },
+            piman: { 
+                title: "ピーマン", 
+                content: "太陽の恵みをたっぷり浴びて育ちました。ビタミンCが非常に豊富で、肉詰めや炒め物にするとシャキシャキ感が引き立ちます。",
+                cultivation: "暑さに強く、病気にも強いため初心者でも簡単に育てられます。最初の花が咲き出したら、その下の脇芽を摘み取って風通しを良くしましょう。乾燥に弱いので、夏場はプランターの土が乾かないように朝晩しっかり水やりをします。"
+            },
+            kabocha: { 
+                title: "かぼちゃ", 
+                content: "じっくり育てて甘みを蓄えました。ホクホクとした食感が特徴で、定番の煮物はもちろん、スープやプリンにも最適です。",
+                cultivation: "ツルが四方に長く伸びるため、広いスペース（地這い栽培）を用意するか、ネットに這わせる「立体栽培」で省スペースに育てます。親ツルが伸びて本葉5〜6枚で摘心し、勢いの良い子ツルを2〜3本伸ばしてそこに実を着けるようにします。実が大きくなったら地面に直接つかないよう台座を敷いてあげます。"
+            },
+            jagaimo: { 
+                title: "ジャガイモ", 
+                content: "大地の旨味が詰まったホクホクのジャガイモです。カレーや肉じゃがなどの煮込み料理から、ポテトサラダまで幅広く活躍します。",
+                cultivation: "春（3月頃）または秋（9月頃）に種イモを植え付けます。芽が伸びてきたら、元気なものを1〜2本残して他を引き抜く「芽かき」を行います。ジャガイモが日光に当たって緑色（毒素）になるのを防ぐため、成長に合わせて株元に土を盛る「土寄せ」を2〜3回行うのが収穫量を増やす大事なポイントです。"
+            },
+            toumorokoshi: { 
+                title: "トウモロコシ", 
+                content: "圧倒的な甘さが自慢です！収穫直後が一番甘いため、手に入ったらすぐに茹でるか、焼きトウモロコシにして召し上がれ。",
+                cultivation: "風で受粉するため、1列ではなく複数列（ブロック状）に並べて植えるのが、実がスカスカにならずぎっしり詰まる秘訣です。1株から複数の実（雌穂）が出ますが、栄養を1つに集中させるために、一番上の大きな1本だけを残し、下のものは小さいうちに「ヤングコーン」として摘み取って食べましょう。"
+            }
         };
+
+        const box = document.getElementById('desc-box');
+        const accContent = document.getElementById('accordion-content');
+        const accArrow = document.getElementById('accordion-arrow');
 
         document.querySelectorAll('.veg-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 const key = btn.getAttribute('data-veg');
-                const box = document.getElementById('desc-box');
                 document.getElementById('desc-title').textContent = vegData[key].title;
                 document.getElementById('desc-content').textContent = vegData[key].content;
+                document.getElementById('desc-cultivation').textContent = vegData[key].cultivation;
+                
+                // 野菜が切り替わったら、アコーディオンは一度閉じた状態にする
+                accContent.style.maxHeight = '0';
+                accArrow.classList.remove('rotated');
+                
                 box.style.display = 'block';
             });
         });
-
         // ==================================================
         // 2. 逆さゲームの制御ロジック
         // ==================================================
