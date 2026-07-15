@@ -249,7 +249,20 @@
             </div>
         </section>
 
-        <!-- ミニゲームセクション -->
+        <!-- コメントセクション (位置を上に移動) -->
+        <section>
+            <h2>みなさまの声・掲示板</h2>
+            <div class="comment-form">
+                <input type="text" id="username" placeholder="お名前" maxlength="20" required>
+                <textarea id="comment-text" placeholder="直売所へのメッセージや感想をどうぞ！" rows="3" maxlength="200" required></textarea>
+                <button type="button" id="submit-comment">コメントを投稿する</button>
+            </div>
+            <div id="comment-list" class="comment-list">
+                <!-- コメントがここに動的生成されます -->
+            </div>
+        </section>
+
+        <!-- ミニゲームセクション (位置を下に移動) -->
         <section>
             <h2>ミニゲーム：おやさい逆さゲーム</h2>
             <div class="game-box">
@@ -265,19 +278,6 @@
                 <button id="next-btn" class="next-btn" style="display: none;">次の問題へ</button>
             </div>
         </section>
-
-        <!-- コメントセクション -->
-        <section>
-            <h2>みなさまの声・掲示板</h2>
-            <div class="comment-form">
-                <input type="text" id="username" placeholder="お名前" maxlength="20" required>
-                <textarea id="comment-text" placeholder="直売所へのメッセージや感想をどうぞ！" rows="3" maxlength="200" required></textarea>
-                <button type="button" id="submit-comment">コメントを投稿する</button>
-            </div>
-            <div id="comment-list" class="comment-list">
-                <!-- コメントがここに動的生成されます -->
-            </div>
-        </section>
     </div>
 
     <!-- Firebase JS SDK v10 (CDNから読み込み) -->
@@ -290,12 +290,13 @@
         // --------------------------------------------------
         const firebaseConfig = {
             apiKey: "AIzaSyA1TfvllQ6tnyi6kv7iRstfnLwpLwuB8Jo",
-            authDomain: "sanchoku-986da.firebaseapp.com",
-            projectId: "sanchoku-986da",
-            storageBucket: "sanchoku-986da.firebasestorage.app",
-           messagingSenderId: "1048589978486",
-           appId: "1:1048589978486:web:f54aa2c997045775444857"
+  　　　　　 authDomain: "sanchoku-986da.firebaseapp.com",
+  　　　　　 projectId: "sanchoku-986da",
+ 　　　　　  storageBucket: "sanchoku-986da.firebasestorage.app",
+ 　　　　　  messagingSenderId: "1048589978486",
+            appId: "1:1048589978486:web:f54aa2c997045775444857"
 };
+
 
         // Firebase初期化
         const app = initializeApp(firebaseConfig);
