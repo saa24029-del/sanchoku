@@ -281,23 +281,21 @@
         <!-- 野菜紹介セクション -->
         <section>
             <h2>取扱野菜の紹介</h2>
-<p>見たい野菜の画像ボタンを押すと、詳しい説明が表示されます。</p>
-<div class="veg-grid">
-    <!-- Unsplashのフリー画像を使用 -->
-    <!-- ★ ナスのコードを他の野菜と同じボタン形式に修正しました ★ -->
-    <button class="veg-btn" data-veg="nasu" style="background-image: url('nasu.jpg');"><span>ナス</span></button>
-    <button class="veg-btn" data-veg="piman" style="background-image: url('piman.jpg');"><span>ピーマン</span></button>
-    <button class="veg-btn" data-veg="kabocha" style="background-image: url('ka.jpg');"><span>かぼちゃ</span></button>
-    <button class="veg-btn" data-veg="jagaimo" style="background-image: url('https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=300&q=80');"><span>ジャガイモ</span></button>
-    <button class="veg-btn" data-veg="toumorokoshi" style="background-image: url('https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=300&q=80');"><span>トウモロコシ</span></button>
-</div>
-<div id="desc-box" class="desc-box">
-    <h3 id="desc-title"></h3>
-    <p id="desc-content"></p>
-</div>
-        </section>
+            <p>見たい野菜の画像ボタンを押すと、詳しい説明が表示されます。</p>
+            <div class="veg-grid">
+                <button class="veg-btn" data-veg="nasu" style="background-image: url('nasu.jpg');"><span>ナス</span></button>
+                <button class="veg-btn" data-veg="piman" style="background-image: url('piman.jpg');"><span>ピーマン</span></button>
+                <button class="veg-btn" data-veg="kabocha" style="background-image: url('ka.jpg');"><span>かぼちゃ</span></button>
+                <button class="veg-btn" data-veg="jagaimo" style="background-image: url('https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=300&q=80');"><span>ジャガイモ</span></button>
+                <button class="veg-btn" data-veg="toumorokoshi" style="background-image: url('https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=300&q=80');"><span>トウモロコシ</span></button>
+            </div>
 
-<!-- 提案③：折りたたみ（アコーディオン）栽培方法 -->
+            <!-- 野菜クリック時に開く説明ボックス -->
+            <div id="desc-box" class="desc-box">
+                <h3 id="desc-title"></h3>
+                <p id="desc-content"></p>
+
+                <!-- 折りたたみ（アコーディオン）栽培方法 -->
                 <div class="accordion-container">
                     <button id="accordion-toggle" class="accordion-toggle">
                         <span>🌱 おうちでの栽培方法を見る</span>
@@ -305,12 +303,16 @@
                     </button>
                     <div id="accordion-content" class="accordion-content">
                         <p id="desc-cultivation"></p>
+                        <!-- ★ここに不足していた外部リンク用の枠を追加しました★ -->
+                        <div id="cultivation-link-box" style="padding: 10px 15px; display: none;">
+                            <a id="cultivation-link" href="#" target="_blank" rel="noopener noreferrer" style="color: #16a34a; font-weight: bold; text-decoration: none; font-size: 0.9rem;"></a>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
         
-        <!-- コメントセクション (位置を上に移動) -->
+        <!-- コメントセクション -->
         <section>
             <h2>みなさまの声・掲示板</h2>
             <div class="comment-form">
@@ -323,8 +325,7 @@
             </div>
         </section>
 
-        <!-- ミニゲームセクション (位置を下に移動) -->
-         <!-- ミニゲームセクション -->
+        <!-- ミニゲームセクション -->
         <section>
             <h2>ミニゲーム：おやさい逆さゲーム</h2>
             <div class="game-box">
@@ -352,17 +353,16 @@
         import { getFirestore, collection, addDoc, getDocs, orderBy, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         // --------------------------------------------------
-        // ここに自分のconfigを貼る
+        // Firebase Config (全角スペースを修正しました)
         // --------------------------------------------------
         const firebaseConfig = {
             apiKey: "AIzaSyA1TfvllQ6tnyi6kv7iRstfnLwpLwuB8Jo",
-  　　　　　 authDomain: "sanchoku-986da.firebaseapp.com",
-  　　　　　 projectId: "sanchoku-986da",
- 　　　　　  storageBucket: "sanchoku-986da.firebasestorage.app",
- 　　　　　  messagingSenderId: "1048589978486",
+            authDomain: "sanchoku-986da.firebaseapp.com",
+            projectId: "sanchoku-986da",
+            storageBucket: "sanchoku-986da.firebasestorage.app",
+            messagingSenderId: "1048589978486",
             appId: "1:1048589978486:web:f54aa2c997045775444857"
-};
-
+        };
 
         // Firebase初期化
         const app = initializeApp(firebaseConfig);
@@ -371,40 +371,40 @@
         // ==================================================
         // 1. 野菜紹介の制御ロジック
         // ==================================================
-      const vegData = {
+        const vegData = {
             nasu: { 
                 title: "ナス", 
                 content: "みずみずしく、油との相性が抜群。焼きナス、天ぷら、麻婆茄子など様々な料理で主役になれる万能野菜です。",
-                cultivation: "日当たりと風通しの良い場所で育てます。ナスは「水と肥料で育つ」と言われるほど水を好むため、土の表面が乾いたらたっぷり水やりをしましょう。一番最初の実がなったら、そのすぐ下の勢いのある脇芽を2本残して「3本仕立て」にするのが多収穫のコツです。"
-           linkUrl: "https://sakata-tsushin.com/lesson-vegetable/detail_2/", // 【任意】リンクさせたい栽培解説URL
+                cultivation: "日当たりと風通しの良い場所で育てます。ナスは「水と肥料で育つ」と言われるほど水を好むため、土の表面が乾いたらたっぷり水やりをしましょう。一番最初の実がなったら、そのすぐ下の勢いのある脇芽を2本残して「3本仕立て」にするのが多収穫のコツです。",
+                linkUrl: "https://sakata-tsushin.com/lesson-vegetable/detail_2/",
                 linkText: "👉 ナスの詳しい育て方を調べる（外部サイト）"
             },
             piman: { 
                 title: "ピーマン", 
                 content: "太陽の恵みをたっぷり浴びて育ちました。ビタミンCが非常に豊富で、肉詰めや炒め物にするとシャキシャキ感が引き立ちます。",
-                cultivation: "暑さに強く、病気にも強いため初心者でも簡単に育てられます。最初の花が咲き出したら、その下の脇芽を摘み取って風通しを良くしましょう。乾燥に弱いので、夏場はプランターの土が乾かないように朝晩しっかり水やりをします。"
-           linkUrl: "https://sakata-tsushin.com/lesson-vegetable/detail_13/", // 【任意】リンクさせたい栽培解説URL
+                cultivation: "暑さに強く、病気にも強いため初心者でも簡単に育てられます。最初の花が咲き出したら、その下の脇芽を摘み取って風通しを良くしましょう。乾燥に弱いので、夏場はプランターの土が乾かないように朝晩しっかり水やりをします。",
+                linkUrl: "https://sakata-tsushin.com/lesson-vegetable/detail_13/",
                 linkText: "👉 ピーマンの詳しい育て方を調べる（外部サイト）"
             },
             kabocha: { 
                 title: "かぼちゃ", 
                 content: "じっくり育てて甘みを蓄えました。ホクホクとした食感が特徴で、定番の煮物はもちろん、スープやプリンにも最適です。",
-                cultivation: "ツルが四方に長く伸びるため、広いスペース（地這い栽培）を用意するか、ネットに這わせる「立体栽培」で省スペースに育てます。親ツルが伸びて本葉5〜6枚で摘心し、勢いの良い子ツルを2〜3本伸ばしてそこに実を着けるようにします。実が大きくなったら地面に直接つかないよう台座を敷いてあげます。"
-          linkUrl: "https://sakata-tsushin.com/lesson-vegetable/detail_33/", // 【任意】リンクさせたい栽培解説URL
+                cultivation: "ツルが四方に長く伸びるため、広いスペース（地這い栽培）を用意するか、ネットに這わせる「立体栽培」で省スペースに育てます。親ツルが伸びて本葉5〜6枚で摘心し、勢いの良い子ツルを2〜3本伸ばしてそこに実を着けるようにします。実が大きくなったら地面に直接つかないよう台座を敷いてあげます。",
+                linkUrl: "https://sakata-tsushin.com/lesson-vegetable/detail_33/",
                 linkText: "👉 かぼちゃの詳しい育て方を調べる（外部サイト）"
             },
             jagaimo: { 
                 title: "ジャガイモ", 
                 content: "大地の旨味が詰まったホクホクのジャガイモです。カレーや肉じゃがなどの煮込み料理から、ポテトサラダまで幅広く活躍します。",
-                cultivation: "春（3月頃）または秋（9月頃）に種イモを植え付けます。芽が伸びてきたら、元気なものを1〜2本残して他を引き抜く「芽かき」を行います。ジャガイモが日光に当たって緑色（毒素）になるのを防ぐため、成長に合わせて株元に土を盛る「土寄せ」を2〜3回行うのが収穫量を増やす大事なポイントです。"
-           linkUrl: "https://sakata-tsushin.com/yomimono/tokushu/detail_904/", // 【任意】リンクさせたい栽培解説URL
+                cultivation: "春（3月頃）または秋（9月頃）に種イモを植え付けます。芽が伸びてきたら、元気なものを1〜2本残して他を引き抜く「芽かき」を行います。ジャガイモが日光に当たって緑色（毒素）になるのを防ぐため、成長に合わせて株元に土を盛る「土寄せ」を2〜3回行うのが収穫量を増やす大事なポイントです。",
+                linkUrl: "https://sakata-tsushin.com/yomimono/tokushu/detail_904/",
                 linkText: "👉 ジャガイモの詳しい育て方を調べる（外部サイト）"
             },
             toumorokoshi: { 
                 title: "トウモロコシ", 
                 content: "圧倒的な甘さが自慢です！収穫直後が一番甘いため、手に入ったらすぐに茹でるか、焼きトウモロコシにして召し上がれ。",
-                cultivation: "風で受粉するため、1列ではなく複数列（ブロック状）に並べて植えるのが、実がスカスカにならずぎっしり詰まる秘訣です。1株から複数の実（雌穂）が出ますが、栄養を1つに集中させるために、一番上の大きな1本だけを残し、下のものは小さいうちに「ヤングコーン」として摘み取って食べましょう。"
-          linkUrl: "https://sakata-tsushin.com/lesson-vegetable/detail_3/", // 【任意】リンクさせたい栽培解説URL
+                cultivation: "風で受粉するため、1列ではなく複数列（ブロック状）に並べて植えるのが、実がスカスカにならずぎっしり詰まる秘訣です。1株から複数の実（雌穂）が出ますが、栄養を1つに集中させるために、一番上の大きな1本だけを残し、下のものは小さいうちに「ヤングコーン」として摘み取って食べましょう。",
+                linkUrl: "https://sakata-tsushin.com/lesson-vegetable/detail_3/",
                 linkText: "👉 トウモロコシの詳しい育て方を調べる（外部サイト）"
             }
         };
@@ -420,7 +420,7 @@
                 document.getElementById('desc-content').textContent = vegData[key].content;
                 document.getElementById('desc-cultivation').textContent = vegData[key].cultivation;
 
-// リンクの設定
+                // リンクの設定
                 const linkEl = document.getElementById('cultivation-link');
                 const linkBox = document.getElementById('cultivation-link-box');
                 if (vegData[key].linkUrl) {
@@ -438,6 +438,7 @@
                 box.style.display = 'block';
             });
         });
+
         // アコーディオンの開閉処理
         document.getElementById('accordion-toggle').addEventListener('click', () => {
             const isOpen = accArrow.classList.contains('rotated');
@@ -445,11 +446,11 @@
                 accContent.style.maxHeight = '0';
                 accArrow.classList.remove('rotated');
             } else {
-                // スムーズなアニメーション展開のためにscrollHeightを使用
                 accContent.style.maxHeight = accContent.scrollHeight + 'px';
                 accArrow.classList.add('rotated');
             }
         });
+
         // ==================================================
         // 2. 逆さゲームの制御ロジック
         // ==================================================
@@ -477,12 +478,10 @@
         let currentQuiz = null;
 
         function initGame() {
-            // ランダムに問題を選択
             const quiz = quizList[Math.floor(Math.random() * quizList.length)];
             currentQuiz = quiz;
             document.getElementById('game-question').textContent = quiz.reverse;
             
-            // 選択肢の生成（正解 + ダミー3つ）
             let choices = [quiz.word];
             while(choices.length < 4) {
                 const randomVeg = quizList[Math.floor(Math.random() * quizList.length)].word;
@@ -490,10 +489,8 @@
                     choices.push(randomVeg);
                 }
             }
-            // 選択肢をシャッフル
             choices.sort(() => Math.random() - 0.5);
             
-            // ボタンへ反映
             for(let i = 0; i < 4; i++) {
                 const btn = document.getElementById(`choice-${i}`);
                 btn.textContent = choices[i];
@@ -517,7 +514,6 @@
             const resultDiv = document.getElementById('game-result');
             const expDiv = document.getElementById('game-explain');
             
-            // すべての選択肢ボタンを無効化
             for(let i = 0; i < 4; i++) {
                 document.getElementById(`choice-${i}`).disabled = true;
             }
@@ -534,32 +530,27 @@
                 selectedBtn.style.borderColor = "#ef4444";
             }
             
-            // 解説を表示
             expDiv.textContent = `【${currentQuiz.word} (${currentQuiz.pronunciation})】 ${currentQuiz.desc}`;
             expDiv.style.display = 'block';
             
             document.getElementById('next-btn').style.display = 'block';
         }
 
-        // ゲーム用のイベントリスナー設定
         for(let i = 0; i < 4; i++) {
             document.getElementById(`choice-${i}`).addEventListener('click', () => checkAnswer(i));
         }
         document.getElementById('next-btn').addEventListener('click', initGame);
         
-        // 初回ゲーム起動
         initGame();
+
         // ==================================================
         // 3. Firestore コメント機能のロジック
         // ==================================================
-        
-        // コメント一覧を取得して新しい順に表示する関数
         async function loadComments() {
             const commentListDiv = document.getElementById('comment-list');
-            commentListDiv.innerHTML = ''; // 描画クリア
+            commentListDiv.innerHTML = '';
             
             try {
-                // query と orderBy("createdAt", "desc") で新しい順に取得
                 const q = query(collection(db, "comments"), orderBy("createdAt", "desc"));
                 const querySnapshot = await getDocs(q);
                 
@@ -570,19 +561,17 @@
 
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
-                    
                     const item = document.createElement('div');
                     item.className = 'comment-item';
                     
                     const meta = document.createElement('div');
                     meta.className = 'comment-meta';
                     
-                    // タイムスタンプのフォーマット
                     const dateText = data.createdAt ? new Date(data.createdAt.seconds * 1000).toLocaleString('ja-JP') : '送信中...';
                     
                     const nameSpan = document.createElement('span');
                     nameSpan.style.fontWeight = 'bold';
-                    nameSpan.textContent = data.name; // 安全な表示のためにtextContentを使用
+                    nameSpan.textContent = data.name;
                     
                     const dateSpan = document.createElement('span');
                     dateSpan.textContent = dateText;
@@ -592,7 +581,7 @@
                     
                     const text = document.createElement('div');
                     text.className = 'comment-text';
-                    text.textContent = data.text; // 安全な表示のためにtextContentを使用
+                    text.textContent = data.text;
                     
                     item.appendChild(meta);
                     item.appendChild(text);
@@ -604,7 +593,6 @@
             }
         }
 
-        // コメント送信処理
         document.getElementById('submit-comment').addEventListener('click', async () => {
             const nameInput = document.getElementById('username');
             const textInput = document.getElementById('comment-text');
@@ -618,18 +606,15 @@
             }
             
             try {
-                // collection(db, "comments") に addDoc でデータを保存
                 await addDoc(collection(db, "comments"), {
                     name: name,
                     text: text,
                     createdAt: serverTimestamp()
                 });
                 
-                // フォームをリセット
                 nameInput.value = '';
                 textInput.value = '';
                 
-                // 再読み込みして一覧を更新
                 await loadComments();
             } catch (e) {
                 console.error("Error adding document: ", e);
@@ -637,7 +622,6 @@
             }
         });
 
-        // ページ読み込み時にコメントを表示
         loadComments();
     </script>
 </body>
