@@ -234,20 +234,20 @@
         <!-- 野菜紹介セクション -->
         <section>
             <h2>取扱野菜の紹介</h2>
-            <p>見たい野菜の画像ボタンを押すと、詳しい説明が表示されます。</p>
-            <div class="veg-grid">
-                <!-- Unsplashのフリー画像を使用 -->
-                <!-- ナスの画像を表示するコード（ここを追加します） -->
-　　　　　　     <img src="nasu.jpg" alt="木のテーブルに置かれた3本のナス" class="site-image">
-                <button class="veg-btn" data-veg="piman" style="background-image: url('https://images.unsplash.com/photo-1595855759920-86582396756a?auto=format&fit=crop&w=300&q=80');"><span>ピーマン</span></button>
-                <button class="veg-btn" data-veg="kabocha" style="background-image: url('https://images.unsplash.com/photo-1506806732259-39c2d0268443?auto=format&fit=crop&w=300&q=80');"><span>かぼちゃ</span></button>
-                <button class="veg-btn" data-veg="jagaimo" style="background-image: url('https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=300&q=80');"><span>ジャガイモ</span></button>
-                <button class="veg-btn" data-veg="toumorokoshi" style="background-image: url('https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=300&q=80');"><span>トウモロコシ</span></button>
-            </div>
-            <div id="desc-box" class="desc-box">
-                <h3 id="desc-title"></h3>
-                <p id="desc-content"></p>
-            </div>
+<p>見たい野菜の画像ボタンを押すと、詳しい説明が表示されます。</p>
+<div class="veg-grid">
+    <!-- Unsplashのフリー画像を使用 -->
+    <!-- ★ ナスのコードを他の野菜と同じボタン形式に修正しました ★ -->
+    <button class="veg-btn" data-veg="nasu" style="background-image: url('nasu.jpg');"><span>ナス</span></button>
+    <button class="veg-btn" data-veg="piman" style="background-image: url('https://images.unsplash.com/photo-1595855759920-86582396756a?auto=format&fit=crop&w=300&q=80');"><span>ピーマン</span></button>
+    <button class="veg-btn" data-veg="kabocha" style="background-image: url('https://images.unsplash.com/photo-1506806732259-39c2d0268443?auto=format&fit=crop&w=300&q=80');"><span>かぼちゃ</span></button>
+    <button class="veg-btn" data-veg="jagaimo" style="background-image: url('https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=300&q=80');"><span>ジャガイモ</span></button>
+    <button class="veg-btn" data-veg="toumorokoshi" style="background-image: url('https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=300&q=80');"><span>トウモロコシ</span></button>
+</div>
+<div id="desc-box" class="desc-box">
+    <h3 id="desc-title"></h3>
+    <p id="desc-content"></p>
+</div>
         </section>
 
         <!-- コメントセクション (位置を上に移動) -->
