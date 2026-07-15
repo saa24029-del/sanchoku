@@ -264,10 +264,14 @@
         </section>
 
         <!-- ミニゲームセクション (位置を下に移動) -->
+         <!-- ミニゲームセクション -->
         <section>
             <h2>ミニゲーム：おやさい逆さゲーム</h2>
             <div class="game-box">
-                <p>問題の文字を<strong>後ろから（逆さまに）</strong>読むと、どの野菜の名前になるでしょうか？</p>
+                <p class="game-info">
+                    画面に表示された<strong>カタカナ（逆さま言葉）</strong>を後ろから読むと、どの野菜の名前になるでしょうか？<br>
+                    中にはとても長くて珍しい、伝統的なお野菜の名前（超難問）も混ざっていますよ！
+                </p>
                 <div id="game-question" class="game-question">???</div>
                 <div class="choices">
                     <button class="choice-btn" id="choice-0"></button>
@@ -276,6 +280,7 @@
                     <button class="choice-btn" id="choice-3"></button>
                 </div>
                 <div id="game-result" class="game-result"></div>
+                <div id="game-explain" class="game-explain"></div>
                 <button id="next-btn" class="next-btn" style="display: none;">次の問題へ</button>
             </div>
         </section>
